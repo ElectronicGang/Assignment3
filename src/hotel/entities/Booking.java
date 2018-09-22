@@ -10,23 +10,20 @@ import hotel.credit.CreditCard;
 import hotel.utils.IOUtils;
 
 public class Booking {
-	
-	private enum State {PENDING, CHECKED_IN, CHECKED_OUT};
-	
+	/* Class global variables declaration */
+	private enum State {PENDING, CHECKED_IN, CHECKED_OUT};	
 	private Guest guest;
 	private Room room;
-	private Date bookedArrival; 
+	private Date guestArrival; // variable "bookedArrival" renamed as "guestArrival"
 	private int stayLength;
 	int numberOfOccupants;
 	long confirmationNumber;
 	CreditCard creditCard;
-	
-	private List<ServiceCharge> charges;
-	
+	private List<ServiceCharge> charges;	
 	private State state;
 
 
-	
+	/* Default Booking constructor */
 	public Booking(Guest guest, Room room, 
 			Date arrivalDate, int stayLength, 
 			int numberOfOccupants, 
@@ -34,7 +31,7 @@ public class Booking {
 		
 		this.guest = guest;
 		this.room = room;
-		this.bookedArrival = arrivalDate;
+		this.guestArrival = arrivalDate;// variable "bookedArrival" renamed as "guestArrival"
 		this.stayLength = stayLength;
 		this.numberOfOccupants = numberOfOccupants;
 		this.confirmationNumber = generateConfirmationNumber(room.getId(), arrivalDate);
@@ -43,7 +40,7 @@ public class Booking {
 		this.state = State.PENDING;
 	}
 
-	
+	/* Method to generate booking confirmation number */
 	private long generateConfirmationNumber(int roomId, Date arrivalDate) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(arrivalDate);
@@ -57,12 +54,12 @@ public class Booking {
 		return Long.parseLong(numberString);
 	}
 
-
+        /* Method to check any time conflicts in the booking */
 	public boolean doTimesConflict(Date requestedArrival, int stayLength) {
 		IOUtils.trace("Booking: timesConflict");
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(bookedArrival);
+		calendar.setTime(guestArrival); // variable "bookedArrival" renamed as "guestArrival"
 		calendar.add(Calendar.DATE, stayLength);
 		Date bookedDeparture = calendar.getTime();
 		
@@ -71,67 +68,67 @@ public class Booking {
 		Date requestedDeparture = calendar.getTime();
 		
 		boolean doesConflict = requestedArrival.before(bookedDeparture) && 
-				requestedDeparture.after(bookedArrival);
+				requestedDeparture.after(guestArrival);// variable "bookedArrival" renamed as "guestArrival"
 
 		return doesConflict;
 	}
 
-
+        /* get method for confirmation number */
 	public long getConfirmationNumber() {
 		return confirmationNumber;
 	}
 
-
+        /* get method for room Id */
 	public int getRoomId() {
 		return room.getId();
 	}
 	
-	
+	/* get method for croom */
 	public Room getRoom() {
 		return room;
 	}
 
-
+        /* get method for arival date */
 	public Date getArrivalDate() {
-		return bookedArrival;
+		return guestArrival;// variable "bookedArrival" renamed as "guestArrival"
 	}
 
-
+        /* get method for length of the stay */
 	public int getStayLength() {
 		return stayLength;
 	}
 
-
+        /* get method for guest */
 	public Guest getGuest() {
 		return guest;
 	}
 
-
+        /* get method for card details */
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
 
-
+        /* check method for pending status */
 	public boolean isPending() {
 		return state == State.PENDING;
 	}
 
-
+        /* check method for checked in status */
 	public boolean isCheckedIn() {
 		return state == State.CHECKED_IN;
 	}
 
-
+        /* check method for pending status */
 	public boolean isCheckedOut() {
 		return state == State.CHECKED_OUT;
 	}
 
-
+        /* get method for list of service charges */
 	public List<ServiceCharge> getCharges() {
 		return Collections.unmodifiableList(charges);
 	}
 
-
+        /* method check in */
 	public void checkIn() {
             if (state != State.PENDING) {
                 String mesg = String.format("Booking: checkIn : bad state : %s", new Object[] { state });
@@ -141,7 +138,7 @@ public class Booking {
             state = State.CHECKED_IN;
 	}
 
-
+        /* Method for adding service chargers */
 	public void addServiceCharge(ServiceType serviceType, double cost) {
             if (state != State.CHECKED_IN) {
                 String mesg = String.format("Booking: addServiceCharge : bad state : %s", new Object[] { state });
@@ -151,7 +148,7 @@ public class Booking {
             charges.add(charge);
         }
   
-
+        /* Method for checking out */
 	public void checkOut() {
             if (state != State.CHECKED_IN) {
                 String mesg = String.format("Booking: checkOut : bad state : %s", new Object[] { state });
