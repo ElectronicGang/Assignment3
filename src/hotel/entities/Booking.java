@@ -133,17 +133,32 @@ public class Booking {
 
 
 	public void checkIn() {
-		// TODO Auto-generated method stub
+            if (state != State.PENDING) {
+                String mesg = String.format("Booking: checkIn : bad state : %s", new Object[] { state });
+            throw new RuntimeException(mesg);
+            }
+            room.checkin();
+            state = State.CHECKED_IN;
 	}
 
 
 	public void addServiceCharge(ServiceType serviceType, double cost) {
-		// TODO Auto-generated method stub
-	}
-
+            if (state != State.CHECKED_IN) {
+                String mesg = String.format("Booking: addServiceCharge : bad state : %s", new Object[] { state });
+            throw new RuntimeException(mesg);
+            }
+            ServiceCharge charge = new ServiceCharge(serviceType, cost);
+            charges.add(charge);
+        }
+  
 
 	public void checkOut() {
-		// TODO Auto-generated method stub
+            if (state != State.CHECKED_IN) {
+                String mesg = String.format("Booking: checkOut : bad state : %s", new Object[] { state });
+            throw new RuntimeException(mesg);
+            }
+            room.checkout(this);
+            state = State.CHECKED_OUT;
 	}
 
 }
