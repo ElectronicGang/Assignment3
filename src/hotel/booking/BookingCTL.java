@@ -47,6 +47,17 @@ public class BookingCTL {
 		bookingUI.run();
 	}
 	
+	 public State getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
+	
 	 public long getConfirmationNumber() {
         return confirmationNumber;
     }
