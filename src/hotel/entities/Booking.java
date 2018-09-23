@@ -21,9 +21,6 @@ public class Booking {
 	CreditCard creditCard;
 	private List<ServiceCharge> charges;	
 	private State state;
-
-
-	
 	
 	 public Booking(){
            setState(State.PENDING);
