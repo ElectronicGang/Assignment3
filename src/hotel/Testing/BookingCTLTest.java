@@ -30,7 +30,8 @@ public class BookingCTLTest {
     /**
      * Test of creditDetailsEntered method, of class BookingCTL.
      */
-    @Test
+    
+ @Test
     public void testCreditDetailsEntered() {
         System.out.println("creditDetailsEntered");
         Hotel hotel = new Hotel();//create hotel object for booking
@@ -52,7 +53,6 @@ public class BookingCTLTest {
         assertEquals("COMPLETED", state, currentState);//checking whether state is credit
         
     }
-
     
     
     
