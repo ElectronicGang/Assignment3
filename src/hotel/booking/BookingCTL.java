@@ -20,7 +20,7 @@ public class BookingCTL {
 	
 	private BookingUI bookingUI;
 	private Hotel hotel;
-
+        private long confirmationNumber;
 	private Guest guest;
 	private Room room;
 	private double cost;
@@ -46,6 +46,17 @@ public class BookingCTL {
 		IOUtils.trace("BookingCTL: run");
 		bookingUI.run();
 	}
+	
+	 public long getConfirmationNumber() {
+        return confirmationNumber;
+    }
+
+    /**
+     * @param confirmationNumber the confirmationNumber to set
+     */
+    public void setConfirmationNumber(long confirmationNumber) {
+        this.confirmationNumber = confirmationNumber;
+    }
 	
 	
 	public void phoneNumberEntered(int phoneNumber) {
