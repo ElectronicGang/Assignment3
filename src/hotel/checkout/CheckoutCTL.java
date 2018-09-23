@@ -120,6 +120,11 @@ public class CheckoutCTL {
       			checkoutUI.setState(CheckoutUI.State.COMPLETED);
     		}
 	}
+	
+	public State getState()
+	{
+		return this.state;	
+	}
 
 
 	public void cancel() {
