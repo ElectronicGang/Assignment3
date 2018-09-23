@@ -47,6 +47,17 @@ public class BookingCTL {
 		bookingUI.run();
 	}
 	
+	public BookingUI getBookingUI() {
+        return bookingUI;
+    }
+
+    /**
+     * @param bookingUI the bookingUI to set
+     */
+    public void setBookingUI(BookingUI bookingUI) {
+        this.bookingUI = bookingUI;
+    }
+	
 	 public State getState() {
         return state;
     }
