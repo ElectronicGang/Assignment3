@@ -130,32 +130,44 @@ public class Booking {
 
         /* method check in */
 	public void checkIn() {
-            if (state != State.PENDING) {
-                String mesg = String.format("Booking: checkIn : bad state : %s", new Object[] { state });
-            throw new RuntimeException(mesg);
-            }
-            room.checkin();
-            state = State.CHECKED_IN;
+             this.room = new Room();//intialize room instance for the method
+		//checking state befor the checking
+    if (getState() != State.PENDING) {
+        //if state not equal to pending error message will display with current stste
+      String message = String.format("Booking: checkIn : bad state : %s", new Object[] { getState()});
+      throw new RuntimeException(message);//run time exception will be thrown.
+    }
+    //execute checkin method of room class to make room occupied
+       room.checkin();
+    //make state as checked in
+        setState(State.CHECKED_IN);
 	}
 
         /* Method for adding service chargers */
 	public void addServiceCharge(ServiceType serviceType, double cost) {
-            if (state != State.CHECKED_IN) {
-                String mesg = String.format("Booking: addServiceCharge : bad state : %s", new Object[] { state });
-            throw new RuntimeException(mesg);
-            }
-            ServiceCharge charge = new ServiceCharge(serviceType, cost);
-            charges.add(charge);
+           checkIn();
+            //checking the state first
+		if (getState() != State.CHECKED_IN) {
+      String message = String.format("Booking: addServiceCharge : bad state : %s", new Object[] { getState()});
+      throw new RuntimeException(message);
+    }
+                //creating an instance of service charge with passed parameters
+    ServiceCharge servCharge = new ServiceCharge(serviceType, cost);
+    charges.add(servCharge); // add charge to the charges list
         }
   
         /* Method for checking out */
 	public void checkOut() {
-            if (state != State.CHECKED_IN) {
-                String mesg = String.format("Booking: checkOut : bad state : %s", new Object[] { state });
-            throw new RuntimeException(mesg);
-            }
-            room.checkout(this);
-            state = State.CHECKED_OUT;
+             checkIn();
+		//checking the state first
+    if (getState() != State.CHECKED_IN) {
+      String message = String.format("Booking: checkOut : bad state : %s", new Object[] { getState()});
+      throw new RuntimeException(message);
+    }
+    //passing object of the class to checkout method of room class
+    room.checkout(this);
+    // change state as checked out.
+        setState(State.CHECKED_OUT);
 	}
 
 }
