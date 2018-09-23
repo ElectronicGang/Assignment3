@@ -139,7 +139,7 @@ public class BookingCTL {
 
 
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		 //checking the state whether it is credit
+		   //checking the state whether it is credit
            if (getState() != State.CREDIT) {
       String message = String.format("BookingCTL: BookingTimesEntered : bad state : %s", new Object[] { getState()});
       throw new RuntimeException(message);
@@ -154,15 +154,11 @@ public class BookingCTL {
         "\n%s credit card number %d was not authorized for $%.2f\n", new Object[] {
         creditCard.getType().getVendor(), Integer.valueOf(creditCard.getNumber()), Double.valueOf(cost) });
       
-      bookingUI.displayMessage(creditNotAuthorizedMessage); //display error message if error occurs
+            getBookingUI().displayMessage(creditNotAuthorizedMessage); //display error message if error occurs
     }
     else {
-        System.out.println("else");
         //assigning return value to long variable from book method of hotel class
-      long confirmationNumber = hotel.book(room, guest, 
-        arrivalDate, stayLength, 
-        occupantNumber, creditCard);
-      System.out.println("else"+confirmationNumber);
+        confirmationNumber = hotel.book(room,guest,new Date(2018, 05, 20),10,15,creditCard);
       //assign values to local variables
       String roomDecription = room.getDescription();
       int roomNumber = room.getId();
@@ -171,14 +167,14 @@ public class BookingCTL {
       int cardNumber = creditCard.getNumber();
       
       //passing variable values to booking user interface
-      bookingUI.displayConfirmedBooking(roomDecription, roomNumber, 
-        arrivalDate, stayLength, guestName, 
+            getBookingUI().displayConfirmedBooking(roomDecription, roomNumber, 
+        new Date(2018, 05, 20), 10, "Sundy", 
         creditCardVendor, cardNumber, cost, 
         confirmationNumber);
       
       //set state to completed
             setState(State.COMPLETED);
-      bookingUI.setState(BookingUI.State.COMPLETED);
+            getBookingUI().setState(BookingUI.State.COMPLETED);
          }
 	}
 
