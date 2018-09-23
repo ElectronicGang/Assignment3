@@ -37,6 +37,8 @@ public class BookingCTL {
 		this.bookingUI = new BookingUI(this);
 		this.hotel = hotel;
 		state = State.PHONE;
+		this.room = new Room(120,RoomType.DOUBLE);
+                this.guest = new Guest("Sundy", "Deerpark", 123456789);
 	}
 
 	
