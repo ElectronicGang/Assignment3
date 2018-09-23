@@ -39,12 +39,17 @@ public class BookingCTLTest {
         int number = 30202;
         int ccv = 615;
         BookingCTL instance = new BookingCTL(hotel);
+        
         instance.creditDetailsEntered(type, number, ccv);//passing card information to approve
         //create variables for test options
-        String state = "CREDIT";//create variable for expected result
+        String state = "COMPLETED";//create variable for expected result
         String currentState = String.valueOf(instance.getState());//create variable for actual result
+        long expectConfirmation = Long.parseLong("2053918120");
+        long currentConfirmation = instance.getConfirmationNumber();
+        
         // testing each operation
-        assertEquals("CREDIT", state, currentState);//checking whether state is credit
+        assertEquals(expectConfirmation, instance.getConfirmationNumber());
+        assertEquals("COMPLETED", state, currentState);//checking whether state is credit
         
     }
 
