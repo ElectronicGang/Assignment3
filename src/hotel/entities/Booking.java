@@ -22,8 +22,13 @@ public class Booking {
 	private List<ServiceCharge> charges;	
 	private State state;
 
+        /* Default Booking Constructor */
+        public Booking(){
+            this.state = State.PENDING; // Add default value for State to avaoid null output of default constructor
+            
+        }
 
-	/* Default Booking constructor */
+	/* Booking constructor */
 	public Booking(Guest guest, Room room, 
 			Date arrivalDate, int stayLength, 
 			int numberOfOccupants, 
@@ -40,6 +45,7 @@ public class Booking {
 		this.state = State.PENDING;
 	}
 
+    
 	/* Method to generate booking confirmation number */
 	private long generateConfirmationNumber(int roomId, Date arrivalDate) {
 		Calendar calendar = Calendar.getInstance();
@@ -72,6 +78,12 @@ public class Booking {
 
 		return doesConflict;
 	}
+        
+        /* get method for State */
+        public State getState() {
+            return state;//returns the current state 
+        }
+
 
         /* get method for confirmation number */
 	public long getConfirmationNumber() {
@@ -130,32 +142,33 @@ public class Booking {
 
         /* method check in */
 	public void checkIn() {
-            if (state != State.PENDING) {
+            this.room = new Room();//intialize room instance 
+            if (state != State.PENDING) { //Chack the state and throw error message if state is nor PENDING
                 String mesg = String.format("Booking: checkIn : bad state : %s", new Object[] { state });
             throw new RuntimeException(mesg);
             }
-            room.checkin();
-            state = State.CHECKED_IN;
+            room.checkin(); // call checking method to Occupy the room
+            state = State.CHECKED_IN; // Put the booking state as CHECKED_IN
 	}
 
         /* Method for adding service chargers */
 	public void addServiceCharge(ServiceType serviceType, double cost) {
-            if (state != State.CHECKED_IN) {
+            if (state != State.CHECKED_IN) { //Chack the state and throw error message if state is nor PENDING
                 String mesg = String.format("Booking: addServiceCharge : bad state : %s", new Object[] { state });
             throw new RuntimeException(mesg);
             }
-            ServiceCharge charge = new ServiceCharge(serviceType, cost);
-            charges.add(charge);
+            ServiceCharge charge = new ServiceCharge(serviceType, cost);//Create new Service Charge object by constructor overloading 
+            charges.add(charge);// Add the service charge into booking charges list
         }
   
         /* Method for checking out */
 	public void checkOut() {
-            if (state != State.CHECKED_IN) {
+            if (state != State.CHECKED_IN) { //Chack the state and throw error message if state is nor PENDING
                 String mesg = String.format("Booking: checkOut : bad state : %s", new Object[] { state });
             throw new RuntimeException(mesg);
             }
-            room.checkout(this);
-            state = State.CHECKED_OUT;
+            room.checkout(this);  // call checkout method to vacant the room
+            state = State.CHECKED_OUT; // Put the booking state as CHECKED_OUT
 	}
 
 }
