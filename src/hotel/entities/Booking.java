@@ -23,6 +23,12 @@ public class Booking {
 	private State state;
 
 
+	
+	
+	 public Booking(){
+           setState(State.PENDING);
+           this.charges = new ArrayList<>();
+       }
 	/* Default Booking constructor */
 	public Booking(Guest guest, Room room, 
 			Date arrivalDate, int stayLength, 
@@ -127,6 +133,13 @@ public class Booking {
 	public List<ServiceCharge> getCharges() {
 		return Collections.unmodifiableList(charges);
 	}
+	public State getState() {
+        return state;
+        } 
+	
+	public void setState(State state) {
+        this.state = state;
+        }
 
         /* method check in */
 	public void checkIn() {
