@@ -64,10 +64,14 @@ public class BookingTest {
     @Test
     public void testCheckOut() {
         System.out.println("checkOut");
-        Booking instance = null;
-        instance.checkOut();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Booking instance = new Booking(); //Create a new booking instance
+        instance.checkIn(); // execute the cheking method in the booking instance
+        instance.checkOut();// execute the checkout method in the booking instance
+        String currentState = String.valueOf(instance.getState()); // get the current state of the created instance
+        String testState = "CHECKED_OUT"; // Create string for sample expected value
+        assertEquals("CHECKED_OUT", testState, currentState); // Check the expected  value is matching with the state value of the instance
+
+        
     }
     
 }
